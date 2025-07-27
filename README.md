@@ -34,6 +34,7 @@ Perfect for:
 - 🔄 **Browser Controls** - Back, forward, refresh, and home buttons
 - ⚙️ **Easy Configuration** - Simple IP and port setup
 - 🔌 **Network Flexibility** - Connect to any local development server
+- 📁 **Multiple Profiles** - Save and switch between different server configurations
 
 ### TV-Optimized Design
 - 📐 **10-foot UI** - Large, readable text and controls
@@ -48,6 +49,7 @@ Perfect for:
 - 🚨 **Error Handling** - Graceful error recovery with clear messages
 - 📡 **Connection Status** - Real-time connection indicators
 - 🔐 **Cleartext Support** - Works with HTTP development servers
+- ⚡ **Quick Profile Switching** - Switch between development servers instantly
 
 ## 📋 Requirements
 
@@ -106,10 +108,10 @@ cd hazel
 ### Initial Setup
 
 1. **Launch Hazel** on your Fire TV
-2. **Configure Server** - Press Menu button to open settings
-3. **Enter IP Address** - Your development machine's local IP
-4. **Enter Port** - Your server's port (default: 3000)
-5. **Save** - Settings are automatically saved
+2. **Create Profile** - Press the Profiles button (server icon) to create your first server profile
+3. **Enter Details** - Profile name, IP address, and port
+4. **Save Profile** - Your profile is saved and automatically activated
+5. **Switch Profiles** - Use the Profiles button to switch between different servers
 
 ### Navigation Controls
 
@@ -120,6 +122,7 @@ cd hazel
 | **Menu** | Open settings |
 | **Back** | Browser back / Exit |
 | **Home** | Return to Fire TV home |
+| **Profiles** | Manage server profiles |
 
 ### Configuring Your Development Server
 
