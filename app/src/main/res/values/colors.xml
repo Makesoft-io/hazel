@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary Brand Colors -->
+    <color name="primary">#00D4FF</color>
+    <color name="primary_dark">#0099CC</color>
+    <color name="primary_variant">#0080B3</color>
+    <color name="accent">#00FF88</color>
+    <color name="accent_dark">#00CC6A</color>
+    
+    <!-- Background Colors -->
+    <color name="background">#0A0A0F</color>
+    <color name="background_secondary">#121218</color>
+    <color name="surface">#1A1A24</color>
+    <color name="surface_elevated">#252533</color>
+    <color name="surface_variant">#2A2A38</color>
+    
+    <!-- Text Colors -->
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#B8B8CC</color>
+    <color name="text_tertiary">#8A8A99</color>
+    <color name="text_hint">#6A6A77</color>
+    
+    <!-- Interactive Colors -->
+    <color name="focus_color">#00FF88</color>
+    <color name="focus_glow">#4000FF88</color>
+    <color name="hover_color">#1A00D4FF</color>
+    <color name="pressed_color">#3300D4FF</color>
+    
+    <!-- Status Colors -->
+    <color name="success">#00FF88</color>
+    <color name="warning">#FFB800</color>
+    <color name="error">#FF4757</color>
+    <color name="info">#00D4FF</color>
+    
+    <!-- Browser UI Colors -->
+    <color name="toolbar_background">#1A1A24E6</color>
+    <color name="toolbar_surface">#252533</color>
+    <color name="url_bar_background">#2A2A38</color>
+    <color name="button_enabled">#00D4FF</color>
+    <color name="button_disabled">#4A4A57</color>
+    
+    <!-- IP Input Colors -->
+    <color name="ip_field_background">#2A2A38</color>
+    <color name="ip_field_focused">#00D4FF</color>
+    <color name="ip_field_error">#FF4757</color>
+    <color name="ip_field_success">#00FF88</color>
+    <color name="ip_dot_color">#8A8A99</color>
+    
+    <!-- Gradients (for drawable usage) -->
+    <color name="gradient_start">#00D4FF</color>
+    <color name="gradient_end">#0099CC</color>
+    <color name="card_gradient_start">#1A1A24</color>
+    <color name="card_gradient_end">#252533</color>
+    
+    <!-- Utility -->
+    <color name="transparent">#00000000</color>
+    <color name="semi_transparent">#80000000</color>
+    <color name="overlay_dark">#CC000000</color>
+</resources>

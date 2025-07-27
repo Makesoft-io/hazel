@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/input_background"
+    android:padding="@dimen/content_padding"
+    android:focusable="true"
+    android:clickable="true">
+
+    <TextView
+        android:id="@+id/portText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:textColor="@color/text_primary"
+        android:fontFamily="sans-serif-medium"
+        android:layout_marginBottom="@dimen/small_spacing"
+        android:text="3000 - Node.js Dev Server" />
+
+    <TextView
+        android:id="@+id/useCaseText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@color/text_secondary"
+        android:text="React, Next.js, Express development"
+        android:lineSpacingMultiplier="1.2" />
+
+</LinearLayout>

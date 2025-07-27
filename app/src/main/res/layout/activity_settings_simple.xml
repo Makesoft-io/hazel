@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:padding="@dimen/safe_margin">
+    
+    <TextView
+        android:id="@+id/settingsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/safe_margin"
+        android:text="App Settings"
+        android:textSize="36sp"
+        android:textColor="@color/text_primary"
+        android:fontFamily="sans-serif-medium"
+        app:layout_constraintBottom_toTopOf="@+id/settingsContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+    
+    <LinearLayout
+        android:id="@+id/settingsContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/safe_margin"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/buttonContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settingsTitle">
+        
+        <TextView
+            android:id="@+id/ipLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/item_spacing"
+            android:text="Server IP Address (192.168.4.xxx)"
+            android:textSize="24sp"
+            android:textColor="@color/text_primary" />
+        
+        <EditText
+            android:id="@+id/ipEditText"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_marginBottom="@dimen/content_padding"
+            android:background="@drawable/input_background"
+            android:hint="192.168.4.100"
+            android:inputType="textNoSuggestions"
+            android:textSize="28sp"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_hint"
+            android:padding="20dp"
+            android:importantForAutofill="no"
+            android:maxLines="1" />
+        
+        <TextView
+            android:id="@+id/portLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/item_spacing"
+            android:text="Port Number"
+            android:textSize="24sp"
+            android:textColor="@color/text_primary" />
+        
+        <EditText
+            android:id="@+id/portEditText"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:background="@drawable/input_background"
+            android:hint="3000"
+            android:inputType="number"
+            android:textSize="28sp"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_hint"
+            android:padding="20dp"
+            android:importantForAutofill="no"
+            android:maxLength="5"
+            android:maxLines="1" />
+        
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/buttonContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/safe_margin"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settingsContainer">
+        
+        <TextView
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/content_padding"
+            android:background="@drawable/primary_button_background"
+            android:text="Save Settings"
+            android:textSize="26sp"
+            android:textColor="@color/text_primary"
+            android:fontFamily="sans-serif-medium"
+            android:minHeight="64dp"
+            android:minWidth="160dp"
+            android:padding="20dp"
+            android:focusable="true"
+            android:clickable="true"
+            android:gravity="center" />
+        
+        <TextView
+            android:id="@+id/cancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/secondary_button_background"
+            android:text="Cancel"
+            android:textSize="26sp"
+            android:textColor="@color/text_primary"
+            android:fontFamily="sans-serif-medium"
+            android:minHeight="64dp"
+            android:minWidth="160dp"
+            android:padding="20dp"
+            android:focusable="true"
+            android:clickable="true"
+            android:gravity="center" />
+        
+    </LinearLayout>
+    
+</androidx.constraintlayout.widget.ConstraintLayout>

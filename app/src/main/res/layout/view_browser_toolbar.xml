@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/toolbar_height"
+    android:background="@drawable/toolbar_background"
+    android:padding="@dimen/toolbar_padding">
+
+    <!-- Button Container -->
+    <LinearLayout
+        android:id="@+id/buttonContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="@dimen/toolbar_button_size"
+            android:layout_height="@dimen/toolbar_button_size"
+            android:layout_marginEnd="@dimen/small_spacing"
+            android:background="@drawable/toolbar_button_background"
+            android:contentDescription="Go Back"
+            android:focusable="true"
+            android:src="@drawable/ic_arrow_back" />
+
+        <ImageButton
+            android:id="@+id/forwardButton"
+            android:layout_width="@dimen/toolbar_button_size"
+            android:layout_height="@dimen/toolbar_button_size"
+            android:layout_marginEnd="@dimen/small_spacing"
+            android:background="@drawable/toolbar_button_background"
+            android:contentDescription="Go Forward"
+            android:focusable="true"
+            android:src="@drawable/ic_arrow_forward" />
+
+        <ImageButton
+            android:id="@+id/refreshButton"
+            android:layout_width="@dimen/toolbar_button_size"
+            android:layout_height="@dimen/toolbar_button_size"
+            android:layout_marginEnd="@dimen/item_spacing"
+            android:background="@drawable/toolbar_button_background"
+            android:contentDescription="Refresh"
+            android:focusable="true"
+            android:src="@drawable/ic_refresh" />
+
+    </LinearLayout>
+
+    <!-- URL Display Container -->
+    <LinearLayout
+        android:id="@+id/urlContainer"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/url_bar_height"
+        android:layout_marginHorizontal="@dimen/item_spacing"
+        android:background="@drawable/url_bar_background"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/url_bar_padding"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/actionButtonContainer"
+        app:layout_constraintStart_toEndOf="@+id/buttonContainer"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Connection Status Indicator -->
+        <View
+            android:id="@+id/connectionStatus"
+            android:layout_width="@dimen/status_indicator_size"
+            android:layout_height="@dimen/status_indicator_size"
+            android:layout_marginEnd="@dimen/small_spacing"
+            android:background="@drawable/connection_status_indicator"
+            android:backgroundTint="@color/success" />
+
+        <!-- URL Text Display -->
+        <TextView
+            android:id="@+id/urlDisplay"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="middle"
+            android:fontFamily="monospace"
+            android:maxLines="1"
+            android:text="No connection"
+            android:textColor="@color/text_secondary"
+            android:textSize="@dimen/caption_text_size" />
+
+    </LinearLayout>
+
+    <!-- Action Button Container -->
+    <LinearLayout
+        android:id="@+id/actionButtonContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ImageButton
+            android:id="@+id/homeButton"
+            android:layout_width="@dimen/toolbar_button_size"
+            android:layout_height="@dimen/toolbar_button_size"
+            android:layout_marginEnd="@dimen/small_spacing"
+            android:background="@drawable/toolbar_button_background"
+            android:contentDescription="Home"
+            android:focusable="true"
+            android:src="@drawable/ic_home" />
+
+        <ImageButton
+            android:id="@+id/settingsButton"
+            android:layout_width="@dimen/toolbar_button_size"
+            android:layout_height="@dimen/toolbar_button_size"
+            android:background="@drawable/toolbar_button_background"
+            android:contentDescription="Settings"
+            android:focusable="true"
+            android:src="@drawable/ic_settings" />
+
+    </LinearLayout>
+
+    <!-- Progress Bar -->
+    <ProgressBar
+        android:id="@+id/toolbarProgressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/progress_bar_height"
+        android:indeterminate="false"
+        android:max="100"
+        android:progressTint="@color/accent"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:padding="@dimen/ip_container_padding">
+
+    <EditText
+        android:id="@+id/ipField1"
+        android:layout_width="@dimen/ip_field_width"
+        android:layout_height="@dimen/ip_field_height"
+        android:background="@drawable/ip_field_normal"
+        android:gravity="center"
+        android:inputType="number"
+        android:maxLength="3"
+        android:textColor="@color/text_primary"
+        android:textSize="@dimen/input_text_size"
+        android:fontFamily="monospace"
+        android:focusable="true"
+        android:focusableInTouchMode="true" />
+
+    <TextView
+        android:id="@+id/dot1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/small_spacing"
+        android:text="."
+        android:textColor="@color/ip_dot_color"
+        android:textSize="@dimen/ip_dot_size"
+        android:fontFamily="monospace"
+        android:alpha="0.7" />
+
+    <EditText
+        android:id="@+id/ipField2"
+        android:layout_width="@dimen/ip_field_width"
+        android:layout_height="@dimen/ip_field_height"
+        android:background="@drawable/ip_field_normal"
+        android:gravity="center"
+        android:inputType="number"
+        android:maxLength="3"
+        android:textColor="@color/text_primary"
+        android:textSize="@dimen/input_text_size"
+        android:fontFamily="monospace"
+        android:focusable="true"
+        android:focusableInTouchMode="true" />
+
+    <TextView
+        android:id="@+id/dot2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/small_spacing"
+        android:text="."
+        android:textColor="@color/ip_dot_color"
+        android:textSize="@dimen/ip_dot_size"
+        android:fontFamily="monospace"
+        android:alpha="0.7" />
+
+    <EditText
+        android:id="@+id/ipField3"
+        android:layout_width="@dimen/ip_field_width"
+        android:layout_height="@dimen/ip_field_height"
+        android:background="@drawable/ip_field_normal"
+        android:gravity="center"
+        android:inputType="number"
+        android:maxLength="3"
+        android:textColor="@color/text_primary"
+        android:textSize="@dimen/input_text_size"
+        android:fontFamily="monospace"
+        android:focusable="true"
+        android:focusableInTouchMode="true" />
+
+    <TextView
+        android:id="@+id/dot3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/small_spacing"
+        android:text="."
+        android:textColor="@color/ip_dot_color"
+        android:textSize="@dimen/ip_dot_size"
+        android:fontFamily="monospace"
+        android:alpha="0.7" />
+
+    <EditText
+        android:id="@+id/ipField4"
+        android:layout_width="@dimen/ip_field_width"
+        android:layout_height="@dimen/ip_field_height"
+        android:background="@drawable/ip_field_normal"
+        android:gravity="center"
+        android:inputType="number"
+        android:maxLength="3"
+        android:textColor="@color/text_primary"
+        android:textSize="@dimen/input_text_size"
+        android:fontFamily="monospace"
+        android:focusable="true"
+        android:focusableInTouchMode="true" />
+
+</LinearLayout>
