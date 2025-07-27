@@ -23,6 +23,7 @@ class BrowserToolbarView @JvmOverloads constructor(
     private val refreshButton: ImageButton
     private val homeButton: ImageButton
     private val settingsButton: ImageButton
+    private val profilesButton: ImageButton
     private val urlDisplay: TextView
     private val connectionStatus: View
     private val progressBar: ProgressBar
@@ -38,6 +39,7 @@ class BrowserToolbarView @JvmOverloads constructor(
     var onStopLoadingClicked: (() -> Unit)? = null
     var onHomeClicked: (() -> Unit)? = null
     var onSettingsClicked: (() -> Unit)? = null
+    var onProfilesClicked: (() -> Unit)? = null
 
     init {
         // Inflate the custom layout
@@ -50,6 +52,7 @@ class BrowserToolbarView @JvmOverloads constructor(
         refreshButton = findViewById(R.id.refreshButton)
         homeButton = findViewById(R.id.homeButton)
         settingsButton = findViewById(R.id.settingsButton)
+        profilesButton = findViewById(R.id.profilesButton)
         urlDisplay = findViewById(R.id.urlDisplay)
         connectionStatus = findViewById(R.id.connectionStatus)
         progressBar = findViewById(R.id.toolbarProgressBar)
@@ -97,8 +100,13 @@ class BrowserToolbarView @JvmOverloads constructor(
             onSettingsClicked?.invoke()
         }
         
+        profilesButton.setOnClickListener {
+            animateButtonPress(profilesButton)
+            onProfilesClicked?.invoke()
+        }
+        
         // Add focus change listeners for smooth animations and debugging
-        val buttons = listOf(backButton, forwardButton, refreshButton, homeButton, settingsButton)
+        val buttons = listOf(backButton, forwardButton, refreshButton, homeButton, settingsButton, profilesButton)
         buttons.forEach { button ->
             button.setOnFocusChangeListener { _, hasFocus ->
                 animateButtonFocus(button, hasFocus)
@@ -111,6 +119,7 @@ class BrowserToolbarView @JvmOverloads constructor(
                         refreshButton -> "refresh"
                         homeButton -> "home"
                         settingsButton -> "settings"
+                        profilesButton -> "profiles"
                         else -> "unknown"
                     }
                     android.util.Log.d("BrowserToolbar", "Focus gained by: $buttonName button")
@@ -123,7 +132,7 @@ class BrowserToolbarView @JvmOverloads constructor(
         // XML attributes should handle the main navigation, this is just backup
         // and additional configuration
         
-        val allButtons = listOf(backButton, forwardButton, refreshButton, homeButton, settingsButton)
+        val allButtons = listOf(backButton, forwardButton, refreshButton, homeButton, settingsButton, profilesButton)
         
         // Ensure all buttons are properly focusable
         allButtons.forEach { button ->
@@ -178,6 +187,7 @@ class BrowserToolbarView @JvmOverloads constructor(
             refreshButton -> "refresh"
             homeButton -> "home"
             settingsButton -> "settings"
+            profilesButton -> "profiles"
             else -> "unknown"
         }
     }
@@ -347,11 +357,11 @@ class BrowserToolbarView @JvmOverloads constructor(
     
     private fun isToolbarButton(view: View): Boolean {
         return view == backButton || view == forwardButton || view == refreshButton || 
-               view == homeButton || view == settingsButton
+               view == homeButton || view == settingsButton || view == profilesButton
     }
     
     private fun getNextButton(currentButton: View, keyCode: Int): View? {
-        val buttons = listOf(backButton, forwardButton, refreshButton, homeButton, settingsButton)
+        val buttons = listOf(backButton, forwardButton, refreshButton, homeButton, settingsButton, profilesButton)
         val currentIndex = buttons.indexOf(currentButton)
         
         return when (keyCode) {
@@ -365,5 +375,10 @@ class BrowserToolbarView @JvmOverloads constructor(
             }
             else -> null
         }
+    }
+    
+    fun updateCurrentProfile(profile: ServerProfile) {
+        // Update the URL display to show the profile name and URL
+        urlDisplay.text = "${profile.name} - ${profile.getUrl()}"
     }
 }

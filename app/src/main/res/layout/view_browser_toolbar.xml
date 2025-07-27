@@ -111,10 +111,20 @@
             android:id="@+id/settingsButton"
             android:layout_width="@dimen/toolbar_button_size"
             android:layout_height="@dimen/toolbar_button_size"
+            android:layout_marginEnd="@dimen/small_spacing"
             android:background="@drawable/toolbar_button_background"
             android:contentDescription="Settings"
             android:focusable="true"
             android:src="@drawable/ic_settings" />
+
+        <ImageButton
+            android:id="@+id/profilesButton"
+            android:layout_width="@dimen/toolbar_button_size"
+            android:layout_height="@dimen/toolbar_button_size"
+            android:background="@drawable/toolbar_button_background"
+            android:contentDescription="@string/profiles"
+            android:focusable="true"
+            android:src="@drawable/ic_server" />
 
     </LinearLayout>
 

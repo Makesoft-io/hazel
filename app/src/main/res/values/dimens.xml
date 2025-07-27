@@ -63,4 +63,15 @@
     
     <!-- Animations -->
     <dimen name="animation_offset">8dp</dimen>
+    
+    <!-- Additional dimensions for profiles feature -->
+    <dimen name="text_size_title">36sp</dimen>
+    <dimen name="text_size_body">24sp</dimen>
+    <dimen name="text_size_button">26sp</dimen>
+    <dimen name="text_size_small">20sp</dimen>
+    <dimen name="margin_large">24dp</dimen>
+    <dimen name="margin_medium">16dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_tiny">4dp</dimen>
+    <dimen name="input_height">72dp</dimen>
 </resources>
