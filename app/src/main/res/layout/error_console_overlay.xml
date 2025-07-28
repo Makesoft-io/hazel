@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#CC000000"
+    android:visibility="gone">
+
+    <!-- Error Console Container -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/errorConsoleContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/tv_action_safe_margin"
+        android:background="#FF1A1A24"
+        android:padding="@dimen/large_spacing"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+        <!-- Header -->
+        <LinearLayout
+            android:id="@+id/errorConsoleHeader"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="@dimen/medium_spacing"
+                android:src="@drawable/ic_error_console"
+                android:tint="@color/error" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="JavaScript Console"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/title_text_size"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/errorCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/medium_spacing"
+                android:background="@drawable/error_count_background"
+                android:padding="@dimen/small_spacing"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="@dimen/caption_text_size"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/clearErrorsButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="@dimen/small_spacing"
+                android:background="@drawable/toolbar_button_background"
+                android:contentDescription="Clear Errors"
+                android:focusable="true"
+                android:src="@drawable/ic_clear" />
+
+            <ImageButton
+                android:id="@+id/closeConsoleButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/toolbar_button_background"
+                android:contentDescription="Close Console"
+                android:focusable="true"
+                android:src="@drawable/ic_close" />
+
+        </LinearLayout>
+
+        <!-- Error List -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/errorRecyclerView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/medium_spacing"
+            android:scrollbars="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/errorConsoleHeader" />
+
+        <!-- Empty State -->
+        <TextView
+            android:id="@+id/emptyErrorsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No JavaScript errors detected"
+            android:textColor="@color/text_secondary"
+            android:textSize="@dimen/body_text_size"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/errorConsoleHeader" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

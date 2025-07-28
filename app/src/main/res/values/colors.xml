@@ -56,4 +56,6 @@
     <color name="transparent">#00000000</color>
     <color name="semi_transparent">#80000000</color>
     <color name="overlay_dark">#CC000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="card_background">#1A1A24</color>
 </resources>

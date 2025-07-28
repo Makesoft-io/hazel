@@ -96,6 +96,9 @@ class SettingsActivity : AppCompatActivity() {
         
         portEditText.setText(currentPort)
         
+        // Apply IP input formatting after loading existing text
+        IPInputFormatter.applyTo(ipEditText)
+        
         // Focus on IP field if empty
         if (currentIp.isNullOrEmpty()) {
             ipEditText.requestFocus()

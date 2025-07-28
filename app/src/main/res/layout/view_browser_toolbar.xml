@@ -20,7 +20,8 @@
             android:id="@+id/backButton"
             android:layout_width="@dimen/toolbar_button_size"
             android:layout_height="@dimen/toolbar_button_size"
-            android:layout_marginEnd="@dimen/small_spacing"
+            android:layout_margin="@dimen/toolbar_button_margin"
+            android:layout_marginEnd="@dimen/item_spacing"
             android:background="@drawable/toolbar_button_background"
             android:contentDescription="Go Back"
             android:focusable="true"
@@ -30,7 +31,8 @@
             android:id="@+id/forwardButton"
             android:layout_width="@dimen/toolbar_button_size"
             android:layout_height="@dimen/toolbar_button_size"
-            android:layout_marginEnd="@dimen/small_spacing"
+            android:layout_margin="@dimen/toolbar_button_margin"
+            android:layout_marginEnd="@dimen/item_spacing"
             android:background="@drawable/toolbar_button_background"
             android:contentDescription="Go Forward"
             android:focusable="true"
@@ -40,11 +42,23 @@
             android:id="@+id/refreshButton"
             android:layout_width="@dimen/toolbar_button_size"
             android:layout_height="@dimen/toolbar_button_size"
+            android:layout_margin="@dimen/toolbar_button_margin"
             android:layout_marginEnd="@dimen/item_spacing"
             android:background="@drawable/toolbar_button_background"
             android:contentDescription="Refresh"
             android:focusable="true"
             android:src="@drawable/ic_refresh" />
+
+        <ImageButton
+            android:id="@+id/autoRefreshButton"
+            android:layout_width="@dimen/toolbar_button_size"
+            android:layout_height="@dimen/toolbar_button_size"
+            android:layout_margin="@dimen/toolbar_button_margin"
+            android:layout_marginEnd="@dimen/item_spacing"
+            android:background="@drawable/auto_refresh_button_background"
+            android:contentDescription="Auto Refresh"
+            android:focusable="true"
+            android:src="@drawable/ic_auto_refresh" />
 
     </LinearLayout>
 
@@ -53,7 +67,7 @@
         android:id="@+id/urlContainer"
         android:layout_width="0dp"
         android:layout_height="@dimen/url_bar_height"
-        android:layout_marginHorizontal="@dimen/item_spacing"
+        android:layout_marginHorizontal="@dimen/large_spacing"
         android:background="@drawable/url_bar_background"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -68,7 +82,7 @@
             android:id="@+id/connectionStatus"
             android:layout_width="@dimen/status_indicator_size"
             android:layout_height="@dimen/status_indicator_size"
-            android:layout_marginEnd="@dimen/small_spacing"
+            android:layout_marginEnd="@dimen/item_spacing"
             android:background="@drawable/connection_status_indicator"
             android:backgroundTint="@color/success" />
 
@@ -98,19 +112,32 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <ImageButton
+            android:id="@+id/errorConsoleButton"
+            android:layout_width="@dimen/toolbar_button_size"
+            android:layout_height="@dimen/toolbar_button_size"
+            android:layout_margin="@dimen/toolbar_button_margin"
+            android:layout_marginEnd="@dimen/item_spacing"
+            android:background="@drawable/toolbar_button_background"
+            android:contentDescription="Error Console"
+            android:focusable="true"
+            android:src="@drawable/ic_error_console" />
+
+        <ImageButton
             android:id="@+id/homeButton"
             android:layout_width="@dimen/toolbar_button_size"
             android:layout_height="@dimen/toolbar_button_size"
-            android:layout_marginEnd="@dimen/small_spacing"
+            android:layout_margin="@dimen/toolbar_button_margin"
+            android:layout_marginEnd="@dimen/item_spacing"
             android:background="@drawable/toolbar_button_background"
             android:contentDescription="Home"
             android:focusable="true"
             android:src="@drawable/ic_home" />
 
         <ImageButton
-            android:id="@+id/settingsButton"
+            android:id="@+id/profilesButton"
             android:layout_width="@dimen/toolbar_button_size"
             android:layout_height="@dimen/toolbar_button_size"
+            android:layout_margin="@dimen/toolbar_button_margin"
             android:background="@drawable/toolbar_button_background"
             android:contentDescription="Settings"
             android:focusable="true"

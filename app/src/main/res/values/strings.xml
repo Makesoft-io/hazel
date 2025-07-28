@@ -14,4 +14,28 @@
     <string name="hint_ip">e.g., 192.168.1.100</string>
     <string name="hint_port">e.g., 3000</string>
     <string name="default_port">3000</string>
+    
+    <!-- Profile Management -->
+    <string name="profiles">Server Profiles</string>
+    <string name="profile_name">Profile Name</string>
+    <string name="new_profile">New Profile</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="delete_profile">Delete Profile</string>
+    <string name="save_profile">Save Profile</string>
+    <string name="select_profile">Select Profile</string>
+    <string name="active_profile">Active Profile</string>
+    <string name="no_profiles">No profiles saved</string>
+    <string name="profile_saved">Profile saved successfully</string>
+    <string name="profile_deleted">Profile deleted</string>
+    <string name="profile_name_hint">e.g., React Dev Server</string>
+    <string name="confirm_delete_profile">Delete this profile?</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="last_used">Last used: %s</string>
+    <string name="never_used">Never used</string>
+    <string name="quick_switch">Quick Switch</string>
+    
+    <!-- Controls Guide -->
+    <string name="controls_guide_title">Fire TV Controls Guide</string>
+    <string name="controls_guide_instruction">Use the D-pad to navigate through the interface</string>
 </resources>

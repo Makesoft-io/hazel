@@ -24,14 +24,19 @@ class MainActivity : AppCompatActivity() {
     private lateinit var browserToolbar: BrowserToolbarView
     private lateinit var webViewCard: View
     private lateinit var preferences: SharedPreferences
+    private lateinit var profileManager: ProfileManager
+    private lateinit var errorConsole: SimpleErrorConsole
     
     private var serverUrl: String? = null
+    private var currentProfile: ServerProfile? = null
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         
         preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        profileManager = ProfileManager(this)
+        errorConsole = SimpleErrorConsole(this)
         
         initializeViews()
         setupWebView()
@@ -49,6 +54,9 @@ class MainActivity : AppCompatActivity() {
         browserToolbar = findViewById(R.id.browserToolbar)
         webViewCard = findViewById(R.id.webViewCard)
         
+        // Temporarily disable error console overlay to prevent crashes
+        // errorConsoleOverlay = findViewById(R.id.errorConsoleOverlay)
+        
         retryButton.setOnClickListener {
             checkAndLoadServer()
         }
@@ -58,8 +66,8 @@ class MainActivity : AppCompatActivity() {
         }
         
         // Setup browser toolbar callbacks
-        browserToolbar.onSettingsClicked = {
-            openSettings()
+        browserToolbar.onProfilesClicked = {
+            openProfiles()
         }
         
         browserToolbar.onHomeClicked = {
@@ -94,6 +102,13 @@ class MainActivity : AppCompatActivity() {
                 webView.goForward()
             }
         }
+        
+        browserToolbar.onErrorConsoleClicked = {
+            android.util.Log.d("MainActivity", "Error console clicked - showing console")
+            errorConsole.showErrorConsole()
+        }
+        
+        // Error console temporarily disabled for stability
     }
     
     private fun setupWebView() {
@@ -144,19 +159,43 @@ class MainActivity : AppCompatActivity() {
                 // Progress will be handled by the browser toolbar
                 browserToolbar.updateProgress(newProgress)
             }
+            
+            override fun onConsoleMessage(consoleMessage: ConsoleMessage?): Boolean {
+                consoleMessage?.let { msg ->
+                    // Log to Android logcat
+                    android.util.Log.d("WebViewConsole", "${msg.messageLevel()}: ${msg.message()} at ${msg.sourceId()}:${msg.lineNumber()}")
+                    
+                    // Add errors and warnings to our simple console
+                    if (msg.messageLevel() == ConsoleMessage.MessageLevel.ERROR || 
+                        msg.messageLevel() == ConsoleMessage.MessageLevel.WARNING) {
+                        val source = if (msg.sourceId().isNotEmpty() && msg.lineNumber() > 0) {
+                            "${msg.sourceId()}:${msg.lineNumber()}"
+                        } else {
+                            msg.sourceId()
+                        }
+                        errorConsole.addError(msg.message() ?: "Unknown error", source)
+                    }
+                }
+                return super.onConsoleMessage(consoleMessage)
+            }
         }
     }
     
     private fun checkAndLoadServer() {
-        val ip = preferences.getString("server_ip", "")
-        val port = preferences.getString("server_port", "8080")
+        currentProfile = profileManager.getActiveProfile()
         
-        if (ip.isNullOrEmpty()) {
-            showError("No server configured. Please go to settings to configure your development server.")
+        if (currentProfile == null) {
+            // Check for legacy settings or show error
+            if (!profileManager.hasProfiles()) {
+                showError("No server profiles configured. Please create a profile to get started.")
+            } else {
+                showError("No active profile selected. Please select a profile to connect.")
+            }
             return
         }
         
-        serverUrl = "http://$ip:$port"
+        serverUrl = currentProfile!!.getUrl()
+        browserToolbar.updateCurrentProfile(currentProfile!!)
         loadUrl(serverUrl!!)
     }
     
@@ -195,6 +234,11 @@ class MainActivity : AppCompatActivity() {
     
     private fun openSettings() {
         startActivity(Intent(this, SettingsActivity::class.java))
+    }
+    
+    private fun openProfiles() {
+        val intent = Intent(this, ProfilesActivity::class.java)
+        startActivityForResult(intent, REQUEST_PROFILES)
     }
     
     private fun safeOpenSettings() {
@@ -301,5 +345,33 @@ class MainActivity : AppCompatActivity() {
         if (serverUrl == null) {
             checkAndLoadServer()
         }
+    }
+    
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        
+        if (requestCode == REQUEST_PROFILES && resultCode == RESULT_OK) {
+            // Profile was changed, reload the server
+            checkAndLoadServer()
+        }
+    }
+    
+    // toggleErrorConsole method removed - using simple dialog approach
+    
+    override fun onBackPressed() {
+        when {
+            webView.canGoBack() && webViewCard.visibility == View.VISIBLE -> {
+                webView.goBack()
+            }
+            else -> {
+                super.onBackPressed()
+            }
+        }
+    }
+    
+    // Error console dialog removed for stability
+    
+    companion object {
+        private const val REQUEST_PROFILES = 1001
     }
 }

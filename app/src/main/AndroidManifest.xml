@@ -40,6 +40,18 @@
             android:screenOrientation="landscape"
             android:configChanges="keyboard|keyboardHidden|navigation" />
             
+        <activity
+            android:name=".ProfilesActivity"
+            android:label="@string/profiles"
+            android:screenOrientation="landscape"
+            android:configChanges="keyboard|keyboardHidden|navigation" />
+            
+        <activity
+            android:name=".ProfileEditActivity"
+            android:label="@string/new_profile"
+            android:screenOrientation="landscape"
+            android:configChanges="keyboard|keyboardHidden|navigation" />
+            
     </application>
     
 </manifest>
