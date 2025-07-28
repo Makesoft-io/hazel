@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    android:padding="@dimen/margin_large">
+    android:padding="@dimen/tv_action_safe_margin">
 
     <TextView
         android:id="@+id/titleText"
@@ -19,21 +19,24 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
-        android:layout_width="600dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_large"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginEnd="@dimen/margin_medium"
         app:cardBackgroundColor="@color/card_background"
         app:cardCornerRadius="@dimen/card_corner_radius"
         app:cardElevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/titleText">
+        app:layout_constraintTop_toBottomOf="@id/titleText"
+        app:layout_constraintWidth_max="800dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="@dimen/margin_large">
+            android:padding="@dimen/margin_medium">
 
             <!-- Profile Name Input -->
             <TextView
@@ -60,7 +63,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_small"
                 android:text="@string/server_ip"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/text_size_body" />
@@ -83,7 +86,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_small"
                 android:text="@string/server_port"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/text_size_body" />
@@ -106,7 +109,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_large"
+                android:layout_marginTop="@dimen/margin_medium"
                 android:gravity="center"
                 android:orientation="horizontal">
 

@@ -1,0 +1,35 @@
+# Requirements for Fire TV Monitoring System
+# Install with: pip install -r requirements.txt
+
+# Core async support - already in Python 3.7+
+# asyncio (built-in)
+
+# JSON support - already in Python standard library
+# json (built-in)
+
+# Subprocess support - already in Python standard library
+# subprocess (built-in)
+
+# Logging support - already in Python standard library
+# logging (built-in)
+
+# Regular expressions - already in Python standard library
+# re (built-in)
+
+# Time utilities - already in Python standard library
+# time (built-in)
+# datetime (built-in)
+
+# Threading - already in Python standard library
+# concurrent.futures (built-in)
+
+# Signals - already in Python standard library
+# signal (built-in)
+
+# This monitoring system only uses Python standard library modules
+# No external dependencies required!
+
+# Optional: For enhanced monitoring (uncomment if needed)
+# psutil>=5.8.0        # For system monitoring
+# requests>=2.25.0     # For webhook notifications
+# schedule>=1.1.0      # For advanced scheduling

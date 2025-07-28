@@ -8,29 +8,39 @@
     <dimen name="input_text_size">28sp</dimen>
     <dimen name="caption_text_size">20sp</dimen>
     
-    <!-- Spacing and margins -->
+    <!-- Fire TV Ultra-Minimal Margins (maximum edge proximity) -->
+    <dimen name="tv_title_safe_margin">16dp</dimen>        <!-- Ultra-minimal margin for maximum screen usage -->
+    <dimen name="tv_action_safe_margin">8dp</dimen>        <!-- Extremely close to screen edges -->
+    <dimen name="tv_overscan_compensation">4dp</dimen>     <!-- Minimal overscan buffer -->
+    <dimen name="tv_focus_safe_padding">12dp</dimen>       <!-- Reduced padding while maintaining focus visibility -->
+    
+    <!-- Legacy safe margin (now redirects to action safe) -->
     <dimen name="safe_margin">48dp</dimen>
-    <dimen name="content_padding">24dp</dimen>
-    <dimen name="item_spacing">16dp</dimen>
-    <dimen name="small_spacing">8dp</dimen>
-    <dimen name="large_spacing">32dp</dimen>
-    <dimen name="button_padding">20dp</dimen>
+    
+    <!-- Content spacing optimized for TV viewing distance -->
+    <dimen name="content_padding">32dp</dimen>             <!-- Increased for 10-foot UI -->
+    <dimen name="item_spacing">24dp</dimen>                <!-- Larger for TV navigation -->
+    <dimen name="small_spacing">12dp</dimen>               <!-- Minimum visible spacing on TV -->
+    <dimen name="large_spacing">48dp</dimen>               <!-- Large section spacing -->
+    <dimen name="button_padding">24dp</dimen>              <!-- Larger touch targets for TV remotes -->
     
     <!-- Focus animations -->
     <dimen name="focus_scale">1.1</dimen>
     <dimen name="focus_elevation">12dp</dimen>
     <dimen name="card_elevation">8dp</dimen>
     
-    <!-- Browser Toolbar -->
-    <dimen name="toolbar_height">80dp</dimen>
-    <dimen name="toolbar_padding">16dp</dimen>
-    <dimen name="toolbar_button_size">56dp</dimen>
-    <dimen name="toolbar_corner_radius">12dp</dimen>
+    <!-- Browser Toolbar (Compact for maximum web content space) -->
+    <dimen name="toolbar_height">80dp</dimen>              <!-- Thinner toolbar for more web content area -->
+    <dimen name="toolbar_padding">12dp</dimen>             <!-- Reduced padding for compact design -->
+    <dimen name="toolbar_button_size">56dp</dimen>         <!-- Smaller buttons for thinner toolbar -->
+    <dimen name="toolbar_corner_radius">12dp</dimen>       <!-- Smaller radius for compact design -->
+    <dimen name="toolbar_margin_horizontal">@dimen/tv_action_safe_margin</dimen>  <!-- Ultra-minimal margins -->
+    <dimen name="toolbar_button_margin">8dp</dimen>        <!-- Minimal margin while preserving focus indicators -->
     
-    <!-- URL Bar -->
-    <dimen name="url_bar_height">64dp</dimen>
-    <dimen name="url_bar_padding">16dp</dimen>
-    <dimen name="url_bar_corner_radius">32dp</dimen>
+    <!-- URL Bar (Compact) -->
+    <dimen name="url_bar_height">48dp</dimen>              <!-- Reduced height for thinner toolbar -->
+    <dimen name="url_bar_padding">12dp</dimen>             <!-- Reduced padding for compact design -->
+    <dimen name="url_bar_corner_radius">24dp</dimen>       <!-- Smaller radius for compact design -->
     
     <!-- IP Address Input -->
     <dimen name="ip_field_width">80dp</dimen>
@@ -39,10 +49,11 @@
     <dimen name="ip_dot_size">24sp</dimen>
     <dimen name="ip_container_padding">24dp</dimen>
     
-    <!-- Cards and Containers -->
-    <dimen name="card_corner_radius">16dp</dimen>
-    <dimen name="card_padding">24dp</dimen>
-    <dimen name="card_margin">16dp</dimen>
+    <!-- Cards and Containers (Ultra-minimal margins) -->
+    <dimen name="card_corner_radius">16dp</dimen>          <!-- Slightly smaller radius for compact design -->
+    <dimen name="card_padding">24dp</dimen>                <!-- Reduced padding for more content space -->
+    <dimen name="card_margin">@dimen/tv_action_safe_margin</dimen>  <!-- Ultra-minimal margins -->
+    <dimen name="webview_card_margin">@dimen/tv_action_safe_margin</dimen>  <!-- Ultra-minimal WebView margins -->
     
     <!-- Input fields -->
     <dimen name="input_field_height">72dp</dimen>
@@ -74,4 +85,9 @@
     <dimen name="margin_small">8dp</dimen>
     <dimen name="margin_tiny">4dp</dimen>
     <dimen name="input_height">72dp</dimen>
+    
+    <!-- Error Console dimensions -->
+    <dimen name="corner_radius">16dp</dimen>
+    <dimen name="small_corner_radius">8dp</dimen>
+    <dimen name="medium_spacing">16dp</dimen>
 </resources>

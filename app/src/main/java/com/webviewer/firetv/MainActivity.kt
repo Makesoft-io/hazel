@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var webViewCard: View
     private lateinit var preferences: SharedPreferences
     private lateinit var profileManager: ProfileManager
+    private lateinit var errorConsole: SimpleErrorConsole
     
     private var serverUrl: String? = null
     private var currentProfile: ServerProfile? = null
@@ -35,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         
         preferences = PreferenceManager.getDefaultSharedPreferences(this)
         profileManager = ProfileManager(this)
+        errorConsole = SimpleErrorConsole(this)
         
         initializeViews()
         setupWebView()
@@ -52,6 +54,9 @@ class MainActivity : AppCompatActivity() {
         browserToolbar = findViewById(R.id.browserToolbar)
         webViewCard = findViewById(R.id.webViewCard)
         
+        // Temporarily disable error console overlay to prevent crashes
+        // errorConsoleOverlay = findViewById(R.id.errorConsoleOverlay)
+        
         retryButton.setOnClickListener {
             checkAndLoadServer()
         }
@@ -61,10 +66,6 @@ class MainActivity : AppCompatActivity() {
         }
         
         // Setup browser toolbar callbacks
-        browserToolbar.onSettingsClicked = {
-            openSettings()
-        }
-        
         browserToolbar.onProfilesClicked = {
             openProfiles()
         }
@@ -101,6 +102,13 @@ class MainActivity : AppCompatActivity() {
                 webView.goForward()
             }
         }
+        
+        browserToolbar.onErrorConsoleClicked = {
+            android.util.Log.d("MainActivity", "Error console clicked - showing console")
+            errorConsole.showErrorConsole()
+        }
+        
+        // Error console temporarily disabled for stability
     }
     
     private fun setupWebView() {
@@ -150,6 +158,25 @@ class MainActivity : AppCompatActivity() {
             override fun onProgressChanged(view: WebView?, newProgress: Int) {
                 // Progress will be handled by the browser toolbar
                 browserToolbar.updateProgress(newProgress)
+            }
+            
+            override fun onConsoleMessage(consoleMessage: ConsoleMessage?): Boolean {
+                consoleMessage?.let { msg ->
+                    // Log to Android logcat
+                    android.util.Log.d("WebViewConsole", "${msg.messageLevel()}: ${msg.message()} at ${msg.sourceId()}:${msg.lineNumber()}")
+                    
+                    // Add errors and warnings to our simple console
+                    if (msg.messageLevel() == ConsoleMessage.MessageLevel.ERROR || 
+                        msg.messageLevel() == ConsoleMessage.MessageLevel.WARNING) {
+                        val source = if (msg.sourceId().isNotEmpty() && msg.lineNumber() > 0) {
+                            "${msg.sourceId()}:${msg.lineNumber()}"
+                        } else {
+                            msg.sourceId()
+                        }
+                        errorConsole.addError(msg.message() ?: "Unknown error", source)
+                    }
+                }
+                return super.onConsoleMessage(consoleMessage)
             }
         }
     }
@@ -328,6 +355,21 @@ class MainActivity : AppCompatActivity() {
             checkAndLoadServer()
         }
     }
+    
+    // toggleErrorConsole method removed - using simple dialog approach
+    
+    override fun onBackPressed() {
+        when {
+            webView.canGoBack() && webViewCard.visibility == View.VISIBLE -> {
+                webView.goBack()
+            }
+            else -> {
+                super.onBackPressed()
+            }
+        }
+    }
+    
+    // Error console dialog removed for stability
     
     companion object {
         private const val REQUEST_PROFILES = 1001

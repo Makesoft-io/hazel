@@ -1,6 +1,8 @@
 package com.webviewer.firetv
 
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import android.util.AttributeSet
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -21,8 +23,9 @@ class BrowserToolbarView @JvmOverloads constructor(
     private val backButton: ImageButton
     private val forwardButton: ImageButton
     private val refreshButton: ImageButton
+    private val autoRefreshButton: ImageButton
+    private val errorConsoleButton: ImageButton
     private val homeButton: ImageButton
-    private val settingsButton: ImageButton
     private val profilesButton: ImageButton
     private val urlDisplay: TextView
     private val connectionStatus: View
@@ -31,37 +34,50 @@ class BrowserToolbarView @JvmOverloads constructor(
     private var canGoBack = false
     private var canGoForward = false
     private var isLoading = false
+    private var autoRefreshEnabled = false
+    private var autoRefreshHandler: Handler? = null
+    private var autoRefreshRunnable: Runnable? = null
+    
+    // Auto-refresh interval in milliseconds (default: 3 seconds)
+    private var autoRefreshInterval = 3000L
     
     // Callback interfaces
     var onBackClicked: (() -> Unit)? = null
     var onForwardClicked: (() -> Unit)? = null
     var onRefreshClicked: (() -> Unit)? = null
     var onStopLoadingClicked: (() -> Unit)? = null
+    var onAutoRefreshToggled: ((Boolean) -> Unit)? = null
+    var onErrorConsoleClicked: (() -> Unit)? = null
     var onHomeClicked: (() -> Unit)? = null
-    var onSettingsClicked: (() -> Unit)? = null
     var onProfilesClicked: (() -> Unit)? = null
 
     init {
-        // Inflate the custom layout
-        val inflater = LayoutInflater.from(context)
-        inflater.inflate(R.layout.view_browser_toolbar, this, true)
-        
-        // Initialize views
-        backButton = findViewById(R.id.backButton)
-        forwardButton = findViewById(R.id.forwardButton)
-        refreshButton = findViewById(R.id.refreshButton)
-        homeButton = findViewById(R.id.homeButton)
-        settingsButton = findViewById(R.id.settingsButton)
-        profilesButton = findViewById(R.id.profilesButton)
-        urlDisplay = findViewById(R.id.urlDisplay)
-        connectionStatus = findViewById(R.id.connectionStatus)
-        progressBar = findViewById(R.id.toolbarProgressBar)
-        
-        setupButtons()
-        setupFocusNavigation()
-        
-        // Set initial states
-        updateButtonStates()
+        try {
+            // Inflate the custom layout
+            val inflater = LayoutInflater.from(context)
+            inflater.inflate(R.layout.view_browser_toolbar, this, true)
+            
+            // Initialize views
+            backButton = findViewById(R.id.backButton)
+            forwardButton = findViewById(R.id.forwardButton)
+            refreshButton = findViewById(R.id.refreshButton)
+            autoRefreshButton = findViewById(R.id.autoRefreshButton)
+            errorConsoleButton = findViewById(R.id.errorConsoleButton)
+            homeButton = findViewById(R.id.homeButton)
+            profilesButton = findViewById(R.id.profilesButton)
+            urlDisplay = findViewById(R.id.urlDisplay)
+            connectionStatus = findViewById(R.id.connectionStatus)
+            progressBar = findViewById(R.id.toolbarProgressBar)
+            
+            setupButtons()
+            setupFocusNavigation()
+            
+            // Set initial states
+            updateButtonStates()
+        } catch (e: Exception) {
+            android.util.Log.e("BrowserToolbar", "Error initializing BrowserToolbarView", e)
+            throw e
+        }
     }
     
     private fun setupButtons() {
@@ -90,23 +106,30 @@ class BrowserToolbarView @JvmOverloads constructor(
             }
         }
         
+        autoRefreshButton.setOnClickListener {
+            animateButtonPress(autoRefreshButton)
+            toggleAutoRefresh()
+        }
+        
+        errorConsoleButton.setOnClickListener {
+            android.util.Log.d("BrowserToolbar", "Error console button clicked")
+            animateButtonPress(errorConsoleButton)
+            onErrorConsoleClicked?.invoke()
+        }
+        
         homeButton.setOnClickListener {
             animateButtonPress(homeButton)
             onHomeClicked?.invoke()
         }
         
-        settingsButton.setOnClickListener {
-            animateButtonPress(settingsButton)
-            onSettingsClicked?.invoke()
-        }
-        
         profilesButton.setOnClickListener {
+            android.util.Log.d("BrowserToolbar", "Profiles button clicked")
             animateButtonPress(profilesButton)
             onProfilesClicked?.invoke()
         }
         
         // Add focus change listeners for smooth animations and debugging
-        val buttons = listOf(backButton, forwardButton, refreshButton, homeButton, settingsButton, profilesButton)
+        val buttons = listOf(backButton, forwardButton, refreshButton, autoRefreshButton, errorConsoleButton, homeButton, profilesButton)
         buttons.forEach { button ->
             button.setOnFocusChangeListener { _, hasFocus ->
                 animateButtonFocus(button, hasFocus)
@@ -117,8 +140,9 @@ class BrowserToolbarView @JvmOverloads constructor(
                         backButton -> "back"
                         forwardButton -> "forward" 
                         refreshButton -> "refresh"
+                        autoRefreshButton -> "auto-refresh"
+                        errorConsoleButton -> "error-console"
                         homeButton -> "home"
-                        settingsButton -> "settings"
                         profilesButton -> "profiles"
                         else -> "unknown"
                     }
@@ -132,7 +156,7 @@ class BrowserToolbarView @JvmOverloads constructor(
         // XML attributes should handle the main navigation, this is just backup
         // and additional configuration
         
-        val allButtons = listOf(backButton, forwardButton, refreshButton, homeButton, settingsButton, profilesButton)
+        val allButtons = listOf(backButton, forwardButton, refreshButton, autoRefreshButton, errorConsoleButton, homeButton, profilesButton)
         
         // Ensure all buttons are properly focusable
         allButtons.forEach { button ->
@@ -149,11 +173,13 @@ class BrowserToolbarView @JvmOverloads constructor(
                     when (keyCode) {
                         KeyEvent.KEYCODE_DPAD_LEFT -> {
                             val nextButton = when (view) {
-                                backButton -> settingsButton
-                                forwardButton -> backButton 
+                                backButton -> profilesButton
+                                forwardButton -> backButton
                                 refreshButton -> forwardButton
-                                homeButton -> refreshButton
-                                settingsButton -> homeButton
+                                autoRefreshButton -> refreshButton
+                                errorConsoleButton -> autoRefreshButton
+                                homeButton -> errorConsoleButton
+                                profilesButton -> homeButton
                                 else -> null
                             }
                             nextButton?.requestFocus()
@@ -163,9 +189,11 @@ class BrowserToolbarView @JvmOverloads constructor(
                             val nextButton = when (view) {
                                 backButton -> forwardButton
                                 forwardButton -> refreshButton
-                                refreshButton -> homeButton
-                                homeButton -> settingsButton
-                                settingsButton -> backButton
+                                refreshButton -> autoRefreshButton
+                                autoRefreshButton -> errorConsoleButton
+                                errorConsoleButton -> homeButton
+                                homeButton -> profilesButton
+                                profilesButton -> backButton
                                 else -> null
                             }
                             nextButton?.requestFocus()
@@ -180,13 +208,70 @@ class BrowserToolbarView @JvmOverloads constructor(
         android.util.Log.d("BrowserToolbar", "Enhanced focus navigation setup complete")
     }
     
+    private fun toggleAutoRefresh() {
+        autoRefreshEnabled = !autoRefreshEnabled
+        autoRefreshButton.isSelected = autoRefreshEnabled
+        
+        if (autoRefreshEnabled) {
+            startAutoRefresh()
+            android.util.Log.d("BrowserToolbar", "Auto-refresh enabled with ${autoRefreshInterval}ms interval")
+        } else {
+            stopAutoRefresh()
+            android.util.Log.d("BrowserToolbar", "Auto-refresh disabled")
+        }
+        
+        // Notify callback
+        onAutoRefreshToggled?.invoke(autoRefreshEnabled)
+        
+        // Animate button state change
+        animateButtonPress(autoRefreshButton)
+    }
+    
+    private fun startAutoRefresh() {
+        stopAutoRefresh() // Clear any existing timer
+        
+        autoRefreshHandler = Handler(Looper.getMainLooper())
+        autoRefreshRunnable = object : Runnable {
+            override fun run() {
+                if (autoRefreshEnabled && !isLoading) {
+                    android.util.Log.d("BrowserToolbar", "Auto-refresh triggered")
+                    onRefreshClicked?.invoke()
+                }
+                // Schedule next refresh
+                autoRefreshHandler?.postDelayed(this, autoRefreshInterval)
+            }
+        }
+        
+        // Start the auto-refresh cycle
+        autoRefreshHandler?.postDelayed(autoRefreshRunnable!!, autoRefreshInterval)
+    }
+    
+    private fun stopAutoRefresh() {
+        autoRefreshRunnable?.let { runnable ->
+            autoRefreshHandler?.removeCallbacks(runnable)
+        }
+        autoRefreshRunnable = null
+        autoRefreshHandler = null
+    }
+    
+    fun setAutoRefreshInterval(intervalMs: Long) {
+        autoRefreshInterval = intervalMs
+        if (autoRefreshEnabled) {
+            // Restart with new interval
+            startAutoRefresh()
+        }
+    }
+    
+    fun isAutoRefreshEnabled(): Boolean = autoRefreshEnabled
+    
     private fun getButtonName(view: View): String {
         return when (view) {
             backButton -> "back"
             forwardButton -> "forward"
             refreshButton -> "refresh"
+            autoRefreshButton -> "auto-refresh"
+            errorConsoleButton -> "error-console"
             homeButton -> "home"
-            settingsButton -> "settings"
             profilesButton -> "profiles"
             else -> "unknown"
         }
@@ -296,7 +381,8 @@ class BrowserToolbarView @JvmOverloads constructor(
     
     
     fun setConnectionStatus(connected: Boolean) {
-        val colorRes = if (connected) R.color.success else R.color.error
+        // Show green dot regardless of connection status (user preference)
+        val colorRes = R.color.success
         val color = context.getColor(colorRes)
         
         connectionStatus.backgroundTintList = android.content.res.ColorStateList.valueOf(color)
@@ -317,6 +403,12 @@ class BrowserToolbarView @JvmOverloads constructor(
     }
     
     fun getFirstFocusableView(): View = backButton
+    
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        // Clean up auto-refresh to prevent memory leaks
+        stopAutoRefresh()
+    }
     
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
         if (event.action == KeyEvent.ACTION_DOWN) {
@@ -357,11 +449,11 @@ class BrowserToolbarView @JvmOverloads constructor(
     
     private fun isToolbarButton(view: View): Boolean {
         return view == backButton || view == forwardButton || view == refreshButton || 
-               view == homeButton || view == settingsButton || view == profilesButton
+               view == autoRefreshButton || view == errorConsoleButton || view == homeButton || view == profilesButton
     }
     
     private fun getNextButton(currentButton: View, keyCode: Int): View? {
-        val buttons = listOf(backButton, forwardButton, refreshButton, homeButton, settingsButton, profilesButton)
+        val buttons = listOf(backButton, forwardButton, refreshButton, autoRefreshButton, errorConsoleButton, homeButton, profilesButton)
         val currentIndex = buttons.indexOf(currentButton)
         
         return when (keyCode) {

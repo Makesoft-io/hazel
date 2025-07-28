@@ -38,6 +38,9 @@ class ProfileEditActivity : AppCompatActivity() {
         cancelButton = findViewById(R.id.cancelButton)
         titleText = findViewById(R.id.titleText)
         
+        // Apply IP input formatting for better Fire TV experience
+        IPInputFormatter.applyTo(ipEditText)
+        
         saveButton.setOnClickListener {
             saveProfile()
         }

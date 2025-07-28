@@ -4,14 +4,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background">
+    android:background="@color/background"
+    android:padding="@dimen/tv_action_safe_margin">
 
     <TextView
         android:id="@+id/titleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_large"
-        android:layout_marginTop="@dimen/margin_large"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_medium"
         android:text="@string/profiles"
         android:textSize="@dimen/text_size_title"
         android:textColor="@color/text_primary"
@@ -23,7 +24,7 @@
         android:id="@+id/addProfileButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/margin_large"
+        android:layout_marginEnd="@dimen/margin_medium"
         android:background="@drawable/primary_button_background"
         android:clickable="true"
         android:focusable="true"
